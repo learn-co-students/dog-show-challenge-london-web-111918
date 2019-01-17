@@ -48,31 +48,35 @@ function fillEditForm(dog){
   console.log(`${dog.id}`)
 
   nameInput.value = `${dog.name}`
+  nameInput.dataset.id = dog.id
   breedInput.value = `${dog.breed}`
   sexInput.value = `${dog.sex}`
 
-  dogEditForm.addEventListener('submit', event => {
-    event.preventDefault()
-
-    const findDog = state.dogs.find(doggy => doggy.id === dog.id)
-
-    findDog.name = nameInput.value
-    findDog.breed = breedInput.value
-    findDog.sex = sexInput.value
-
-    console.log(findDog)
-
-      updateDogList()
-
-      console.log(baseURL+`/${findDog.id}`)
-      persistDog(findDog)
-
-      dogEditForm.reset()
-  })
 
 
   // updateDogList()
 }
+
+dogEditForm.addEventListener('submit', event => {
+  event.preventDefault()
+
+  const findDog = state.dogs.find(doggy => doggy.id === parseInt(nameInput.dataset.id))
+
+  findDog.name = nameInput.value
+  findDog.breed = breedInput.value
+  findDog.sex = sexInput.value
+
+  console.log(findDog)
+
+  persistDog(findDog)
+  updateDogList()
+
+  console.log(baseURL+`/${findDog.id}`)
+
+  dogEditForm.reset()
+})
+
+
 const persistDog = findDog => {
   fetch(`http://localhost:3000/dogs/${findDog.id}`, {
     method: 'PATCH',
