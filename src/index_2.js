@@ -39,7 +39,7 @@ function updatePage() {
   renderDogs(state.dogs)
 }
 
-// populates form with dogs info
+// populates form inputs with dogs info
 function popDogForm(dog) {
   nameInput.value = dog.name
   breedInput.value = dog.breed
